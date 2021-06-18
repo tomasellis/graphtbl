@@ -20,7 +20,7 @@ type TypesArray = {
   status: "loading" | "error" | "success";
   errorDesc?: {
     msg: string;
-    statusCode: number;
+    statusCode: number | undefined | null;
   };
 };
 const GraphTBL = ({ url }: GraphTBLProps) => {
