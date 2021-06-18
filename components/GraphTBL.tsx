@@ -131,7 +131,7 @@ const query = `{
 
 type DataArray = {
   typesArray: GraphQLSchema[];
-  statusCode?: number;
+  statusCode?: number | undefined | null;
   statusText: string;
 };
 
