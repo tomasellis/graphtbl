@@ -18,27 +18,44 @@ const Form = () => {
 
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <label htmlFor="url">URL</label>
-        <input
-          id="url"
-          type="text"
-          autoComplete="url"
-          required
-          onChange={(e) => setUrl({ ...url, link: e.target.value })}
-        />
+      <div className="py-4 flex-1 flex justify-center">
+        <form
+          className="flex-1 flex items-center justify-center"
+          onSubmit={onSubmit}
+        >
+          <label className="font-bold px-4" htmlFor="url">
+            URL:
+          </label>
+          <input
+            id="url"
+            type="text"
+            autoComplete="url"
+            required
+            className="border-2 border-purple-600"
+            onChange={(e) => setUrl({ ...url, link: e.target.value })}
+          />
 
-        {url.link.match(regex) ? (
-          <button type="submit">Fetch!</button>
-        ) : (
-          <div>
-            <button disabled={true} type="submit">
+          {url.link.match(regex) ? (
+            <button
+              type="submit"
+              className="text-2xl font-bold px-4 rounded-md mx-4 border-2 border-black hover:text-white hover:bg-black hover:shadow-lg"
+            >
               Fetch!
             </button>
-            <span style={{ color: "red" }}>Please input a valid URL</span>
-          </div>
-        )}
-      </form>
+          ) : (
+            <div>
+              <button
+                className="text-2xl font-bold px-4 rounded-md mx-4 border-2 border-black hover:text-white hover:bg-black hover:shadow-lg"
+                disabled={true}
+                type="submit"
+              >
+                Fetch!
+              </button>
+              <span style={{ color: "red" }}>Please input a valid URL</span>
+            </div>
+          )}
+        </form>
+      </div>
       {currentEndpoint.link !== "" ? (
         <GraphTBL url={currentEndpoint.link} />
       ) : (
