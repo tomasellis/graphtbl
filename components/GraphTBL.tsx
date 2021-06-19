@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { ErrorInfo } from "react";
+import { ErrorInfo, SyntheticEvent } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -28,7 +28,8 @@ const GraphTBL = ({ url }: GraphTBLProps) => {
     apiTypes: [],
     status: "loading",
   });
-
+  const [dragSelection, setDragSelection] =
+    useState<HTMLDivElement | null>(null);
   const go = async () => {
     setArrayOfTypes({ ...arrayOfTypes, status: "loading" });
     const typesData = await fetchApiInfo(url);
@@ -105,7 +106,52 @@ const GraphTBL = ({ url }: GraphTBLProps) => {
               {" "}
               Your table{" "}
             </div>
-            <div className="border  text-center px-8 py-4 h-full">Choose</div>
+            <div
+              id="jorge"
+              draggable="true"
+              onDrop={(e) => {
+                e.stopPropagation();
+                if (e.currentTarget !== dragSelection) {
+                  e.currentTarget.innerHTML =
+                    e.dataTransfer.getData("text/html");
+                }
+                return false;
+              }}
+              className="border border-pink-700 cursor-move text-center px-4 py-4 h-28 w-28"
+              onDragStart={(e) => {
+                setDragSelection(e.currentTarget);
+                e.currentTarget.style.opacity = "0.4";
+                e.dataTransfer.effectAllowed = "move";
+                e.dataTransfer.setData("text/html", e.currentTarget.innerHTML);
+              }}
+              onDragEnd={(e) => (e.currentTarget.style.opacity = "1")}
+            >
+              OPTION
+            </div>
+            <div
+              id="hernan"
+              draggable="true"
+              onDragStart={(e) => {
+                e.dataTransfer.setData("Text", e.currentTarget.id);
+                e.currentTarget.style.opacity = "0.4";
+                e.dataTransfer.effectAllowed = "move";
+                e.dataTransfer.setData("text/html", e.currentTarget.innerHTML);
+              }}
+              onDragEnd={(e) => (e.currentTarget.style.opacity = "1")}
+              className="border border-pink-700 cursor-move text-center px-4 py-4 h-28 w-28"
+              onDrag={(e) => console.info(e.currentTarget.innerHTML)}
+              onDrop={(e) => {
+                e.stopPropagation();
+                const data = e.dataTransfer.getData("Text");
+                if (data !== null) {
+                  const obj = document.getElementById(data);
+                  // e.currentTarget.appendChild(obj);
+                }
+                console.log("dateiro", data);
+              }}
+            >
+              OPTION 2
+            </div>
           </div>
         </div>
       );
