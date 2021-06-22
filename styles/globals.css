@@ -57,3 +57,8 @@
     transform: translate(24px, 0);
   }
 }
+
+.glyphicon-move {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}
